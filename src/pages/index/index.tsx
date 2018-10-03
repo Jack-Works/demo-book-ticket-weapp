@@ -7,6 +7,7 @@ import { getAvailableTickets, Ticket } from '../../logic/ticket'
 import TicketSelector from './components/selector'
 import HolderInfo from './components/info-holder'
 import DynamicInfoContainerGroup from './components/info-dynamic-group'
+import Checkout from './components/checkout'
 
 interface State {
     data: Ticket[]
@@ -36,7 +37,6 @@ export default class Index extends Component<{}, State> {
         this.setState({ selectedInfo: { ...this.state.selectedInfo, [ticketType]: newArr } })
     }
     render() {
-        console.log(this.state.holderInfo, this.state.selected, this.state.selectedInfo)
         return (
             <View className="index">
                 <View className="title">
@@ -74,6 +74,7 @@ export default class Index extends Component<{}, State> {
                         />
                     )
                 })}
+                <Checkout />
             </View>
         )
     }
