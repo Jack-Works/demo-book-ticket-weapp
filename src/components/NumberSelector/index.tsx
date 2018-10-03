@@ -19,13 +19,15 @@ export default class NumberSelector extends Component<Props> {
     render() {
         return (
             <View className="container">
-                <View className={this.props.current > 0 ? 'left active' : 'left'}>
+                <View onClick={this.left} className={this.props.current > 0 ? 'left active' : 'left'}>
                     <Text>-</Text>
                 </View>
                 <View className="number">
                     <Text>{this.props.current}</Text>
                 </View>
-                <View className={(this.props.max || Infinity) > this.props.current ? 'right active' : 'right'}>
+                <View
+                    onClick={this.right}
+                    className={(this.props.max || Infinity) > this.props.current ? 'right active' : 'right'}>
                     <Text>+</Text>
                 </View>
             </View>
