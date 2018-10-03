@@ -1,5 +1,5 @@
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View, Text, ScrollView } from '@tarojs/components'
 import './index.less'
 
 import { getAvailableTickets, Ticket } from '../../logic/ticket'
@@ -11,7 +11,7 @@ import Checkout from './components/checkout'
 
 interface State {
     data: Ticket[]
-    selected: Map<string, number>
+    selected: Record<string, number>
     holderInfo: { phone?: string; email?: string }
     /** Record<票类型, 票信息[]> */
     selectedInfo: Record<string, Record<string, any>[]>
@@ -20,15 +20,13 @@ export default class Index extends Component<{}, State> {
     config: Config = {
         navigationBarTitleText: '首页',
     }
-    state: State = { data: [], selected: new Map(), holderInfo: {}, selectedInfo: {} }
+    state: State = { data: [], selected: {}, holderInfo: {}, selectedInfo: {} }
     async componentDidMount() {
         const data = await getAvailableTickets()
         this.setState({ data })
     }
     selectTicket = (id: string, value: number) => {
-        const map = this.state.selected
-        map.set(id, value)
-        this.setState({ selected: map })
+        this.setState({ selected: { ...this.state.selected, [id]: value } })
     }
     modifyHolderInfo = (phone: string, email: string) => this.setState({ holderInfo: { phone, email } })
     dynamicInfoOnChange = (ticketType: string, ticketIndex: number, newInfo: Record<string, any>) => {
@@ -38,43 +36,45 @@ export default class Index extends Component<{}, State> {
     }
     render() {
         return (
-            <View className="index">
-                <View className="title">
-                    <Text>选择票种</Text>
-                </View>
-                <View className="ticket-selector-container">
-                    {this.state.data.map(x => (
-                        <View className="item">
-                            <TicketSelector
-                                ticket={x}
-                                selected={this.state.selected.get(x.id) || 0}
-                                onChange={this.selectTicket.bind(this, x.id)}
+            <View>
+                <ScrollView scrollY className="index">
+                    <View className="title">
+                        <Text>选择票种</Text>
+                    </View>
+                    <View className="ticket-selector-container">
+                        {this.state.data.map(x => (
+                            <View className="item">
+                                <TicketSelector
+                                    ticket={x}
+                                    selected={this.state.selected[x.id] || 0}
+                                    onChange={this.selectTicket.bind(this, x.id)}
+                                />
+                            </View>
+                        ))}
+                    </View>
+                    <View className="title">
+                        <Text>购票人信息</Text>
+                    </View>
+                    <HolderInfo
+                        phone={this.state.holderInfo.phone}
+                        email={this.state.holderInfo.email}
+                        onChange={this.modifyHolderInfo}
+                    />
+                    {Object.entries(this.state.selected).map(x => {
+                        const [key, times] = x
+                        const ticket = this.state.data.find(y => y.id === key)!
+                        return (
+                            <DynamicInfoContainerGroup
+                                ticket={ticket}
+                                values={this.state.selectedInfo[ticket.id]}
+                                onChange={this.dynamicInfoOnChange.bind(this, ticket.id)}
+                                times={times}
+                                key={ticket.id}
                             />
-                        </View>
-                    ))}
-                </View>
-                <View className="title">
-                    <Text>购票人信息</Text>
-                </View>
-                <HolderInfo
-                    phone={this.state.holderInfo.phone}
-                    email={this.state.holderInfo.email}
-                    onChange={this.modifyHolderInfo}
-                />
-                {Array.from(this.state.selected.entries()).map(x => {
-                    const [key, times] = x
-                    const ticket = this.state.data.find(y => y.id === key)!
-                    return (
-                        <DynamicInfoContainerGroup
-                            ticket={ticket}
-                            values={this.state.selectedInfo[ticket.id]}
-                            onChange={this.dynamicInfoOnChange.bind(this, ticket.id)}
-                            times={times}
-                            key={ticket.id}
-                        />
-                    )
-                })}
-                <Checkout />
+                        )
+                    })}
+                </ScrollView>
+                <Checkout tickets={this.state.data} selection={this.state.selected} />
             </View>
         )
     }
