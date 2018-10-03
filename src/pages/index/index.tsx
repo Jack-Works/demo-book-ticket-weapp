@@ -36,6 +36,7 @@ export default class Index extends Component<{}, State> {
         this.setState({ selectedInfo: { ...this.state.selectedInfo, [ticketType]: newArr } })
     }
     render() {
+        console.log(this.state.holderInfo, this.state.selected, this.state.selectedInfo)
         return (
             <View className="index">
                 <View className="title">

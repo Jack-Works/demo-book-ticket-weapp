@@ -27,9 +27,7 @@ interface TicketFormRadio extends TicketForm {
     }[]
 }
 
-interface TicketFormVerify {
-    maxlength: number
-}
+interface TicketFormVerify {}
 
 const sleep = (t: number) => new Promise(resolve => setTimeout(resolve, t))
 export async function getAvailableTickets(): Promise<Ticket[]> {
@@ -53,7 +51,6 @@ export async function getAvailableTickets(): Promise<Ticket[]> {
                 placeholder: '请输入您的身份证号',
                 title: '身份证',
                 type: 'idcard',
-                verify: { maxlength: 18 },
             },
             {
                 key: 'gender',

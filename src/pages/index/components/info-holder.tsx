@@ -12,8 +12,7 @@ interface Props {
 }
 export default class HolderInfo extends Component<Props> {
     static defaultProps: Props = { onChange() {} }
-    onChange = (source: 'phone' | 'email', event: BaseEvent) => {
-        const val = (event.currentTarget as HTMLInputElement).value
+    onChange = (source: 'phone' | 'email', val: string) => {
         if (source === 'email') this.props.onChange(this.props.phone, val)
         if (source === 'phone') this.props.onChange(val, this.props.email)
     }

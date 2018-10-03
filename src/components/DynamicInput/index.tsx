@@ -33,7 +33,6 @@ export default class DynamicInput extends Component<Props> {
                 </View>
             )
         }
-        const policy = this.props.describe.verify || {}
         return (
             <View className="field">
                 <Text className="title">{this.props.describe.title}</Text>
@@ -41,7 +40,6 @@ export default class DynamicInput extends Component<Props> {
                     className="input"
                     type={this.props.describe.type}
                     placeholder={this.props.describe.placeholder}
-                    maxLength={policy.maxlength}
                     onInput={this.handleInput}
                     value={this.props.currentVal}
                 />
