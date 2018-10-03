@@ -5,34 +5,36 @@ import './index.less'
 import { getAvailableTickets, Ticket } from '../../logic/ticket'
 
 import TicketSelector from './components/selector'
-import HolderInfo from './components/info-holder'
-import DynamicInfoContainerGroup from './components/info-dynamic-group'
+import HolderInfo from './components/info-booker'
+import DynamicInfoContainerGroup from './components/info-user-group'
 import Checkout from './components/checkout'
 
 interface State {
     data: Ticket[]
-    selected: Record<string, number>
-    holderInfo: { phone: string; email: string }
+    bookedTicketsCount: Record<string, number>
+    bookerInfo: { phone: string; email: string }
     /** Record<票类型, 票信息[]> */
-    selectedInfo: Record<string, Record<string, string>[]>
+    userInfo: Record<string, Record<string, string>[]>
 }
 export default class Index extends Component<{}, State> {
     config: Config = {
-        navigationBarTitleText: '首页',
+        navigationBarTitleText: '暗之城市立大学魔法与技术展',
     }
-    state: State = { data: [], selected: {}, holderInfo: {} as any, selectedInfo: {} }
+    state: State = { data: [], bookedTicketsCount: {}, bookerInfo: {} as any, userInfo: {} }
     async componentDidMount() {
         const data = await getAvailableTickets()
         this.setState({ data })
     }
-    selectTicket = (id: string, value: number) => {
-        this.setState({ selected: { ...this.state.selected, [id]: value } })
-    }
-    modifyHolderInfo = (phone: string, email: string) => this.setState({ holderInfo: { phone, email } })
-    dynamicInfoOnChange = (ticketType: string, ticketIndex: number, newInfo: Record<string, any>) => {
-        const newArr = [...(this.state.selectedInfo[ticketType] || [])]
+    /** 修改需要购票的数量 */
+    changeTicketsCount = (id: string, value: number) =>
+        this.setState({ bookedTicketsCount: { ...this.state.bookedTicketsCount, [id]: value } })
+    /** 修改购票人信息 */
+    changeBookerInfo = (phone: string, email: string) => this.setState({ bookerInfo: { phone, email } })
+    /** 修改用户信息 */
+    changeUserInfo = (ticketType: string, ticketIndex: number, newInfo: Record<string, string>) => {
+        const newArr = [...(this.state.userInfo[ticketType] || [])]
         newArr[ticketIndex] = newInfo
-        this.setState({ selectedInfo: { ...this.state.selectedInfo, [ticketType]: newArr } })
+        this.setState({ userInfo: { ...this.state.userInfo, [ticketType]: newArr } })
     }
     render() {
         return (
@@ -46,8 +48,8 @@ export default class Index extends Component<{}, State> {
                             <View className="item">
                                 <TicketSelector
                                     ticket={x}
-                                    selected={this.state.selected[x.id] || 0}
-                                    onChange={this.selectTicket.bind(this, x.id)}
+                                    selected={this.state.bookedTicketsCount[x.id] || 0}
+                                    onChange={this.changeTicketsCount.bind(this, x.id)}
                                 />
                             </View>
                         ))}
@@ -56,18 +58,18 @@ export default class Index extends Component<{}, State> {
                         <Text>购票人信息</Text>
                     </View>
                     <HolderInfo
-                        phone={this.state.holderInfo.phone}
-                        email={this.state.holderInfo.email}
-                        onChange={this.modifyHolderInfo}
+                        phone={this.state.bookerInfo.phone}
+                        email={this.state.bookerInfo.email}
+                        onChange={this.changeBookerInfo}
                     />
-                    {Object.entries(this.state.selected).map(x => {
+                    {Object.entries(this.state.bookedTicketsCount).map(x => {
                         const [key, times] = x
                         const ticket = this.state.data.find(y => y.id === key)!
                         return (
                             <DynamicInfoContainerGroup
                                 ticket={ticket}
-                                values={this.state.selectedInfo[ticket.id]}
-                                onChange={this.dynamicInfoOnChange.bind(this, ticket.id)}
+                                values={this.state.userInfo[ticket.id]}
+                                onChange={this.changeUserInfo.bind(this, ticket.id)}
                                 times={times}
                                 key={ticket.id}
                             />
@@ -76,9 +78,9 @@ export default class Index extends Component<{}, State> {
                 </ScrollView>
                 <Checkout
                     tickets={this.state.data}
-                    selection={this.state.selected}
-                    bookerInfo={this.state.holderInfo}
-                    userInfo={this.state.selectedInfo}
+                    order={this.state.bookedTicketsCount}
+                    bookerInfo={this.state.bookerInfo}
+                    userInfo={this.state.userInfo}
                 />
             </View>
         )

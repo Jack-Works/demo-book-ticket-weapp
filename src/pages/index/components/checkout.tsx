@@ -4,17 +4,17 @@ import { Ticket, bookTickets } from '../../../logic/ticket'
 
 interface Props {
     tickets: Ticket[]
-    selection: Record<string, number>
+    order: Record<string, number>
     userInfo: Record<string, Record<string, string>[]>
     bookerInfo: Record<string, string>
 }
 export default class Checkout extends Component<Props> {
-    calcTickets = () => Object.values(this.props.selection).reduce((x, y) => x + y, 0)
+    calcTickets = () => Object.values(this.props.order).reduce((x, y) => x + y, 0)
     calcPrice = () =>
-        Object.entries(this.props.selection)
+        Object.entries(this.props.order)
             .map(([id, number]) => this.props.tickets.find(y => y.id === id)!.priceInCent * number)
             .reduce((x, y) => x + y, 0)
-    onPay = () => bookTickets(this.props.selection, this.props.userInfo, this.props.bookerInfo)
+    onPay = () => bookTickets(this.props.order, this.props.userInfo, this.props.bookerInfo)
     render() {
         const price = this.calcPrice()
         return (

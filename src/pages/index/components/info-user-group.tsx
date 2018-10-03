@@ -3,10 +3,11 @@ import { View, Text } from '@tarojs/components'
 
 import '../index.less'
 import { Ticket } from '../../../logic/ticket'
-import DynamicInfoContainer from './info-dynamic'
+import DynamicInfoContainer from './info-user'
 
 export default class DynamicInfoContainerGroup extends Component<{
     ticket: Ticket
+    /** 票对应的信息 */
     values: Record<string, any>
     onChange(index: number, val: Record<string, any>): void
     times: number

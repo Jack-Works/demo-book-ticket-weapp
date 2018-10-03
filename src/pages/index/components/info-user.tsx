@@ -22,7 +22,7 @@ export default class DynamicInfoContainer extends Component<Props> {
                     <DynamicInput
                         describe={x}
                         onChange={this.onChange.bind(this, x.key)}
-                        currentVal={this.props.currentValues[x.key]}
+                        currentValues={this.props.currentValues[x.key]}
                     />
                 ))}
             </View>

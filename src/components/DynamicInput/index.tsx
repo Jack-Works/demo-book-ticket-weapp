@@ -9,13 +9,13 @@ import './index.less'
 interface Props {
     describe: TicketForms
     onChange(val: string): void
-    currentVal: any
+    currentValues: any
 }
 export default class DynamicInput extends Component<Props> {
     static defaultProps: Props = {
         describe: { key: 'unknown', title: '', type: 'text', placeholder: '' },
         onChange() {},
-        currentVal: undefined,
+        currentValues: undefined,
     }
     handleInput = (v: BaseEvent) => this.props.onChange((v.currentTarget as HTMLInputElement).value)
     render() {
@@ -25,7 +25,7 @@ export default class DynamicInput extends Component<Props> {
                     <Text className="title">{this.props.describe.title}</Text>
                     <RadioGroup name={this.props.describe.key} onChange={this.handleInput}>
                         {this.props.describe.options.map(x => (
-                            <Radio className="radio" checked={this.props.currentVal === x.value} value={x.value}>
+                            <Radio className="radio" checked={this.props.currentValues === x.value} value={x.value}>
                                 {x.text}
                             </Radio>
                         ))}
@@ -41,7 +41,7 @@ export default class DynamicInput extends Component<Props> {
                     type={this.props.describe.type}
                     placeholder={this.props.describe.placeholder}
                     onInput={this.handleInput}
-                    value={this.props.currentVal}
+                    value={this.props.currentValues}
                 />
             </View>
         )

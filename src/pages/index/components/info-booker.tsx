@@ -3,7 +3,6 @@ import { View } from '@tarojs/components'
 import DynamicInput from '../../../components/DynamicInput'
 
 import './info.less'
-import { BaseEvent } from '@tarojs/components/types/common'
 
 interface Props {
     phone?: string
@@ -26,7 +25,7 @@ export default class HolderInfo extends Component<Props> {
                         type: 'number',
                         placeholder: '请输入您的手机号，将用于接受出票短信',
                     }}
-                    currentVal={this.props.phone}
+                    currentValues={this.props.phone}
                     onChange={this.onChange.bind(this, 'phone')}
                 />
                 <DynamicInput
@@ -36,7 +35,7 @@ export default class HolderInfo extends Component<Props> {
                         type: 'text',
                         placeholder: '请输入您的电子邮箱，将用于接受出票邮件',
                     }}
-                    currentVal={this.props.email}
+                    currentValues={this.props.email}
                     onChange={this.onChange.bind(this, 'email')}
                 />
             </View>
