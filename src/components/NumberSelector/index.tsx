@@ -26,7 +26,6 @@ export default class NumberSelector extends Component<Props> {
         return this.props.max
     }
     render() {
-        console.log(this.props.max, this.props.current, this.max() > this.props.current)
         return (
             <View className="container">
                 <View onClick={this.onLeftClick} className={this.props.current > 0 ? 'left active' : 'left'}>

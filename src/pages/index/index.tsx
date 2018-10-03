@@ -5,6 +5,7 @@ import './index.less'
 import { getAvailableTickets, Ticket } from '../../logic/ticket'
 
 import TicketSelector from './components/selector'
+import HolderInfo from './components/info-holder'
 
 interface State {
     data: Ticket[]
@@ -44,6 +45,7 @@ export default class Index extends Component<{}, State> {
                 <View className="title">
                     <Text>购票人信息</Text>
                 </View>
+                <HolderInfo />
             </View>
         )
     }
