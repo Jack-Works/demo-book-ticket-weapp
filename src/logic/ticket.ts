@@ -1,4 +1,4 @@
-interface Ticket {
+export interface Ticket {
     id: string
     ticketName: string
     summary: string
@@ -33,7 +33,7 @@ interface TicketFormVerify {
 }
 
 const sleep = (t: number) => new Promise(resolve => setTimeout(resolve, t))
-async function getAvailableTickets(): Promise<Ticket[]> {
+export async function getAvailableTickets(): Promise<Ticket[]> {
     // Fake web request
     await sleep(500)
     const normal: Ticket = {

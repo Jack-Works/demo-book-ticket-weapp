@@ -1,0 +1,41 @@
+.ticket-selector {
+    display: flex;
+    background: white;
+}
+.ticket {
+    &-info {
+        flex: 0.6;
+        flex-direction: column;
+        padding: 20px 32px 0;
+    }
+    &-title,
+    &-summary {
+        display: block;
+    }
+    &-title {
+        font-size: 36px;
+    }
+    &-summary {
+        font-size: 22px;
+        color: gray;
+        margin-bottom: -22px;
+        font-weight: lighter;
+    }
+    &-price {
+        font-size: 26px;
+        color: #16b9ff;
+        &.main {
+            font-size: 32px;
+        }
+    }
+    &-left {
+        font-size: 20px;
+        color: red;
+        margin-left: 16px;
+        transform: translateY(-2px);
+        display: inline-block;
+    }
+}
+.number-selector {
+    flex: 0.4;
+}

@@ -2,32 +2,33 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import './index.less'
 
-export default class Index extends Component {
-    /**
-     * 指定config的类型声明为: Taro.Config
-     *
-     * 由于 typescript 对于 object 类型推导只能推出 Key 的基本类型
-     * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
-     * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
-     */
+import { getAvailableTickets, Ticket } from '../../logic/ticket'
+
+import TicketSelector from './components/selector'
+
+interface State {
+    data: Ticket[]
+}
+export default class Index extends Component<{}, State> {
     config: Config = {
         navigationBarTitleText: '首页',
     }
-
-    componentWillMount() {}
-
-    componentDidMount() {}
-
-    componentWillUnmount() {}
-
-    componentDidShow() {}
-
-    componentDidHide() {}
-
+    state: State = { data: [] }
+    async componentDidMount() {
+        const data = await getAvailableTickets()
+        this.setState({ data })
+    }
     render() {
         return (
             <View className="index">
-                <Text>Hello world!</Text>
+                <View className="title">
+                    <Text>选择票种</Text>
+                </View>
+                {this.state.data.map(x => (
+                    <View className="ticket-selector-container">
+                        <TicketSelector ticket={x} selected={2} />
+                    </View>
+                ))}
             </View>
         )
     }

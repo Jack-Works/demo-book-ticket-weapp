@@ -1,0 +1,33 @@
+.container {
+    display: inline-flex;
+}
+.left,
+.right,
+.number {
+    width: 100px;
+    height: 60px;
+    font-size: 36px;
+    background: #fbfbfb;
+    border: 1px solid #c5c5c5;
+    text-align: center;
+}
+.left,
+.right {
+    color: #cacaca;
+}
+@radius: 6%;
+.left {
+    border-top-left-radius: @radius;
+    border-bottom-left-radius: @radius;
+}
+.right {
+    border-top-right-radius: @radius;
+    border-bottom-right-radius: @radius;
+}
+.number {
+    border-left: none;
+    border-right: none;
+}
+.active {
+    color: #16b9ff;
+}
