@@ -21,15 +21,6 @@ class App extends Component {
             navigationBarTextStyle: 'black',
         },
     }
-
-    componentDidMount() {}
-
-    componentDidShow() {}
-
-    componentDidHide() {}
-
-    componentCatchError() {}
-
     render() {
         return <Index />
     }

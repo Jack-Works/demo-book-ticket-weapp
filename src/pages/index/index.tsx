@@ -12,15 +12,15 @@ import Checkout from './components/checkout'
 interface State {
     data: Ticket[]
     selected: Record<string, number>
-    holderInfo: { phone?: string; email?: string }
+    holderInfo: { phone: string; email: string }
     /** Record<票类型, 票信息[]> */
-    selectedInfo: Record<string, Record<string, any>[]>
+    selectedInfo: Record<string, Record<string, string>[]>
 }
 export default class Index extends Component<{}, State> {
     config: Config = {
         navigationBarTitleText: '首页',
     }
-    state: State = { data: [], selected: {}, holderInfo: {}, selectedInfo: {} }
+    state: State = { data: [], selected: {}, holderInfo: {} as any, selectedInfo: {} }
     async componentDidMount() {
         const data = await getAvailableTickets()
         this.setState({ data })
@@ -74,7 +74,12 @@ export default class Index extends Component<{}, State> {
                         )
                     })}
                 </ScrollView>
-                <Checkout tickets={this.state.data} selection={this.state.selected} />
+                <Checkout
+                    tickets={this.state.data}
+                    selection={this.state.selected}
+                    bookerInfo={this.state.holderInfo}
+                    userInfo={this.state.selectedInfo}
+                />
             </View>
         )
     }

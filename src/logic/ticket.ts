@@ -87,3 +87,29 @@ export async function getAvailableTickets(): Promise<Ticket[]> {
     }
     return [normal, cloud]
 }
+
+import { request, showToast, requestPayment } from '@tarojs/taro'
+export async function bookTickets(
+    /** 购票数量 */ tickets: Record<string, number>,
+    ticketsInfo: /** Record<票类型, Record<他人信息Key,Value>[]> */ Record<string, Record<string, string>[]>,
+    /** 订购者信息 */ bookerInfo: Record<string, string>,
+) {
+    await sleep(500)
+    try {
+        const result = await request({
+            url: '/api/book/',
+            method: 'POST',
+            data: {
+                ticketsInfo,
+                bookerInfo,
+            },
+            dataType: 'json',
+        })
+        return requestPayment({} as any)
+    } catch (e) {
+        showToast({
+            title: '订票失败，请稍后再试',
+            icon: 'none',
+        })
+    }
+}
