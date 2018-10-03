@@ -1,12 +1,13 @@
 .ticket-selector {
     display: flex;
     background: white;
+    padding-right: 16px;
 }
 .ticket {
     &-info {
         flex: 0.6;
         flex-direction: column;
-        padding: 20px 32px 0;
+        padding: 20px 32px 8px;
     }
     &-title,
     &-summary {
@@ -14,11 +15,12 @@
     }
     &-title {
         font-size: 36px;
+        margin-bottom: 2px;
     }
     &-summary {
         font-size: 22px;
         color: gray;
-        margin-bottom: -22px;
+        margin-bottom: -6px;
         font-weight: lighter;
     }
     &-price {
@@ -38,4 +40,5 @@
 }
 .number-selector {
     flex: 0.4;
+    margin: auto auto;
 }

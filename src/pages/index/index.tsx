@@ -30,15 +30,20 @@ export default class Index extends Component<{}, State> {
                 <View className="title">
                     <Text>选择票种</Text>
                 </View>
-                {this.state.data.map(x => (
-                    <View className="ticket-selector-container">
-                        <TicketSelector
-                            ticket={x}
-                            selected={this.state.selected.get(x.id) || 0}
-                            onChange={this.selectTicket.bind(this, x.id)}
-                        />
-                    </View>
-                ))}
+                <View className="ticket-selector-container">
+                    {this.state.data.map(x => (
+                        <View className="item">
+                            <TicketSelector
+                                ticket={x}
+                                selected={this.state.selected.get(x.id) || 0}
+                                onChange={this.selectTicket.bind(this, x.id)}
+                            />
+                        </View>
+                    ))}
+                </View>
+                <View className="title">
+                    <Text>购票人信息</Text>
+                </View>
             </View>
         )
     }
