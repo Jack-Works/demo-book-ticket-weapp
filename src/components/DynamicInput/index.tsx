@@ -1,7 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Input, RadioGroup, Radio } from '@tarojs/components'
 
-import './info.less'
 import { BaseEvent } from '@tarojs/components/types/common'
 import { TicketForms } from '../../logic/ticket'
 
@@ -24,12 +23,9 @@ export default class DynamicInput extends Component<Props> {
             return (
                 <View className="field">
                     <Text className="title">{this.props.describe.title}</Text>
-                    <RadioGroup name={this.props.describe.key}>
+                    <RadioGroup name={this.props.describe.key} onChange={this.handleInput}>
                         {this.props.describe.options.map(x => (
-                            <Radio
-                                checked={this.props.currentVal === x.value}
-                                value={x.value}
-                                onClick={this.props.onChange.bind(x.value)}>
+                            <Radio className="radio" checked={this.props.currentVal === x.value} value={x.value}>
                                 {x.text}
                             </Radio>
                         ))}
