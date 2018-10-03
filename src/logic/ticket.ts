@@ -4,9 +4,9 @@ export interface Ticket {
     summary: string
     priceInCent: number
     ticketLeft?: number
-    form: (TicketFormNormal | TicketFormRadio)[]
+    form: TicketForms[]
 }
-
+export type TicketForms = TicketFormNormal | TicketFormRadio
 interface TicketForm {
     key: string
     title: string
@@ -15,7 +15,7 @@ interface TicketForm {
 }
 
 interface TicketFormNormal extends TicketForm {
-    type: 'number' | 'string' | 'idcard'
+    type: 'number' | 'text' | 'idcard'
     placeholder: string
 }
 
@@ -28,7 +28,6 @@ interface TicketFormRadio extends TicketForm {
 }
 
 interface TicketFormVerify {
-    minlength: number
     maxlength: number
 }
 
@@ -54,7 +53,7 @@ export async function getAvailableTickets(): Promise<Ticket[]> {
                 placeholder: '请输入您的身份证号',
                 title: '身份证',
                 type: 'idcard',
-                verify: { maxlength: 18, minlength: 18 },
+                verify: { maxlength: 18 },
             },
             {
                 key: 'gender',
@@ -79,7 +78,7 @@ export async function getAvailableTickets(): Promise<Ticket[]> {
                 key: 'name',
                 placeholder: '请输入您的网名',
                 title: '称呼',
-                type: 'string',
+                type: 'text',
             },
             {
                 key: 'email',

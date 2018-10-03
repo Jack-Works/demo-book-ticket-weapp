@@ -1,5 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Input } from '@tarojs/components'
+import DynamicInput from '../../../components/DynamicInput'
 
 import './info.less'
 import { BaseEvent } from '@tarojs/components/types/common'
@@ -19,26 +20,26 @@ export default class HolderInfo extends Component<Props> {
     render() {
         return (
             <View className="container">
-                <View className="field">
-                    <Text className="title">手机号</Text>
-                    <Input
-                        className="input"
-                        type="number"
-                        placeholder="请输入您的手机号，将用于接受出票短信"
-                        value={this.props.phone}
-                        onInput={this.onChange.bind(this, 'phone')}
-                    />
-                </View>
-                <View className="field">
-                    <Text className="title">电子邮箱</Text>
-                    <Input
-                        className="input"
-                        type="text"
-                        placeholder="请输入您的电子邮箱，将用于接受出票邮件"
-                        value={this.props.email}
-                        onInput={this.onChange.bind(this, 'email')}
-                    />
-                </View>
+                <DynamicInput
+                    describe={{
+                        key: 'phone',
+                        title: '手机号',
+                        type: 'number',
+                        placeholder: '请输入您的手机号，将用于接受出票短信',
+                    }}
+                    currentVal={this.props.phone}
+                    onChange={this.onChange.bind(this, 'phone')}
+                />
+                <DynamicInput
+                    describe={{
+                        key: 'email',
+                        title: '电子邮箱',
+                        type: 'text',
+                        placeholder: '请输入您的电子邮箱，将用于接受出票邮件',
+                    }}
+                    currentVal={this.props.email}
+                    onChange={this.onChange.bind(this, 'email')}
+                />
             </View>
         )
     }
