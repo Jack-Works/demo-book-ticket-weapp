@@ -10,12 +10,13 @@ import HolderInfo from './components/info-holder'
 interface State {
     data: Ticket[]
     selected: Map<string, number>
+    holderInfo: { phone?: string; email?: string }
 }
 export default class Index extends Component<{}, State> {
     config: Config = {
         navigationBarTitleText: '首页',
     }
-    state: State = { data: [], selected: new Map() }
+    state: State = { data: [], selected: new Map(), holderInfo: {} }
     async componentDidMount() {
         const data = await getAvailableTickets()
         this.setState({ data })
@@ -25,7 +26,9 @@ export default class Index extends Component<{}, State> {
         map.set(id, value)
         this.setState({ selected: map })
     }
+    modifyHolderInfo = (phone: string, email: string) => this.setState({ holderInfo: { phone, email } })
     render() {
+        console.log(this.state.holderInfo)
         return (
             <View className="index">
                 <View className="title">
@@ -45,7 +48,11 @@ export default class Index extends Component<{}, State> {
                 <View className="title">
                     <Text>购票人信息</Text>
                 </View>
-                <HolderInfo />
+                <HolderInfo
+                    phone={this.state.holderInfo.phone}
+                    email={this.state.holderInfo.email}
+                    onChange={this.modifyHolderInfo}
+                />
             </View>
         )
     }
