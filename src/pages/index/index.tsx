@@ -6,7 +6,7 @@ import { getAvailableTickets, Ticket } from '../../logic/ticket'
 
 import TicketSelector from './components/selector'
 import HolderInfo from './components/info-holder'
-import DynamicInfoContainerGroup from './components/info-dynamic-groupd'
+import DynamicInfoContainerGroup from './components/info-dynamic-group'
 
 interface State {
     data: Ticket[]

@@ -12,8 +12,8 @@ export default class DynamicInfoContainerGroup extends Component<{
     times: number
 }> {
     render() {
-        const times = Array(this.props.times).fill(1)
-        return times.map((_, index) => (
+        const time = Array(this.props.times).fill(1)
+        return time.map((_, index) => (
             <View key={index}>
                 <View className="title">
                     <Text>
